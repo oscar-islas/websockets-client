@@ -1,31 +1,74 @@
 .App {
-  text-align: center;
+  display: flex;
+  height: 100vh;
+  width: 80vw;
+  margin: 0 auto;
+  border-left: solid 1px #a0a0a0;
+  border-right: solid 1px #a0a0a0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App .feed{
+  border-right: solid 1px #6f6f6f;
+  flex-basis: 75%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App .feed .new-post{
+  height: 17%;  
+  border-bottom: solid 5px #a0a0a0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 20px;
+}
+.new-post form {
+  display: flex;
+  flex-direction: column;
 }
 
-.App-link {
-  color: #61dafb;
+.new-post form > textarea{
+  height: 1.7rem;
+  padding: 15px;
+}
+
+.new-post form > input[type="submit"]{
+  align-self: flex-end;
+  margin-top: 20px;
+}
+
+.tweet-container{
+  padding: 20px;
+}
+
+.tweet-container .tweet{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.tweet-container .tweet>input{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 15px;
+  margin-bottom: 15px;
+}
+
+.tweet-options{
+  align-self: flex-end;
+}
+
+.tweet-options button{
+  padding: 5px 10px;
+}
+
+.tweet-options button:first-child{
+  margin-right: 15px;
+}
+
+.right-sidebar{
+  flex-basis: 25%;
+}
+
+.right-sidebar h4{
+  text-align: center;
 }
 
 @keyframes App-logo-spin {
