@@ -8,7 +8,7 @@ function App() {
   let [feed, setFeed] = useState([]);
 
   useEffect(() => {
-    const socket = openSocket.connect('http://localhost:8080');
+    const socket = openSocket.connect('https://vrtz1.sse.codesandbox.io');
     socket.on('new_connection', data => {
       console.log(data.clients);
       setConnectedClients(data.clients);
@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   const sendTweet = () => {
-    fetch('http://localhost:8080/tweet', {
+    fetch('https://vrtz1.sse.codesandbox.io/tweet', {
       method: "post",
       headers: {
         "Content-Type": "application/json"
@@ -28,6 +28,45 @@ function App() {
         tweet: tweet
       })
     }).then(response => response.json()).then(results => console.log(results)).catch(error => console.log(error));
+  }
+
+  const updateTweet = (indice) => {
+    fetch(`https://vrtz1.sse.codesandbox.io/tweet/${indice}`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        tweet: feed[indice]
+      })
+    }).then(response => response.json()).then(results => console.log(results)).catch(error => console.log(error));
+  }
+
+  const deleteTweet = (e, index) => {
+    // console.log(index)
+    let id = index
+    fetch(`https://vrtz1.sse.codesandbox.io/tweet/${id}`, {
+      method: "delete",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => {
+      return response.json()
+    })    
+    .then(results =>{ 
+      console.log(results)
+    })
+    .catch(error => console.log(error));
+   
+  }
+
+
+  const editTweet = (newTweet, indice) => {
+    let tweetsArray = [...feed];
+    console.log(tweetsArray);
+    tweetsArray[indice] = newTweet;
+    setFeed(tweetsArray);
   }
 
   return (
@@ -41,12 +80,12 @@ function App() {
         </div>
         <div className="tweet-container">
           {          
-            feed.map( tweet => (
+            feed.map( (tweet, indice) => (
                 <div className="tweet">
-                  <input value={tweet} />
+                  <input value={tweet} onChange={(e) => editTweet(e.target.value, indice)}/>
                   <div className="tweet-options">
-                    <button onClick={() => console.log("función para guardar cambios")}>Guardar</button>
-                    <button>Eliminar</button>
+                    <button onClick={() => updateTweet(indice)}>Guardar</button>
+                    <button onClick={(e) => deleteTweet(e, indice)}>Eliminar</button>
                   </div>
                 </div>
               ) 
